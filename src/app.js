@@ -16,6 +16,8 @@ app.use("/api/v1", rateRoutes);
 
 app.get("/health", (req, res) => res.send("OK"));
 
+const PORT = process.env.PORT || 3000;
+
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running on ${PORT}`);
