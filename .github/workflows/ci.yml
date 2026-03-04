@@ -17,21 +17,11 @@ services:
     image: mongo:4.4
     ports:
       - 27017:27017
-    options: >-
-      --health-cmd="mongo --eval 'db.runCommand({ ping: 1 })'"
-      --health-interval=10s
-      --health-timeout=5s
-      --health-retries=5
 
   redis:
     image: redis:6
     ports:
       - 6379:6379
-    options: >-
-      --health-cmd="redis-cli ping"
-      --health-interval=10s
-      --health-timeout=5s
-      --health-retries=5
 
 env:
   DATABASE_URL: mongodb://localhost:27017/ratelimitdb
@@ -42,7 +32,7 @@ env:
 
 steps:
 
-  - name: Checkout Repository
+  - name: Checkout Code
     uses: actions/checkout@v3
 
   - name: Setup Node
@@ -52,6 +42,9 @@ steps:
 
   - name: Install Dependencies
     run: npm install
+
+  - name: Wait for services
+    run: sleep 10
 
   - name: Run Tests
     run: npm test
