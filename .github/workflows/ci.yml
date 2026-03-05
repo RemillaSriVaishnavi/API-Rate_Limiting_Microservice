@@ -42,8 +42,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Wait for services
-        run: sleep 10
+      - name: Wait for MongoDB
+        run: |
+          for i in {1..10}; do
+            nc -z localhost 27017 && echo "Mongo ready" && exit 0
+            echo "Waiting for Mongo..."
+            sleep 2
+          done
+          exit 1
 
       - name: Run Tests
         run: npm test

@@ -1,3 +1,4 @@
+jest.setTimeout(20000);
 const request = require("supertest");
 const app = require("../../src/app");
 
@@ -33,4 +34,8 @@ describe("API Integration Tests", () => {
     expect([200,429]).toContain(res.statusCode);
   });
 
+});
+
+afterAll(async () => {
+  await new Promise(resolve => setTimeout(resolve, 500));
 });
